@@ -1,0 +1,44 @@
+git fetch origin
+
+git switch -c review/loick origin/feature/loickfeze
+.\.venv\Scripts\Activate.ps1
+pre-commit run --all-files
+pytest
+
+git add .
+git commit -m "Fix pre-commit issues (loick)"
+
+
+git switch -c review/grace origin/team/gracearsselle
+.\.venv\Scripts\Activate.ps1
+pre-commit run --all-files
+pytest
+
+
+git add .
+git commit -m "Fix pre-commit issues (grace)"
+
+
+git switch main
+git pull origin main
+git switch -c integration/all-features
+
+
+git merge review/loick
+git merge review/grace
+
+
+pre-commit run --all-files
+
+
+git add .
+git commit -m "Apply pre-commit fixes after integration"
+
+
+pytest
+
+
+
+git switch main
+git merge integration/all-features
+git push origin main
